@@ -1,13 +1,11 @@
 @import "./common/styles/*";
 @import "./pods/*/style";
 
-$main-color: #32343a;
-
 .App {
 	height: 100vh;
 	text-align: center;
-	background-color: $main-color;
-	font-family: regular;
+	background-color: $jet-black;
+	font-family: regular, Arial, Verdana;
 }
 
 input, textarea {
