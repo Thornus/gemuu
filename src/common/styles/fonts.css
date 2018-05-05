@@ -1,14 +1,14 @@
 @font-face {
     font-family: regular;
-    src: url(./common/fonts/Raleway-Regular.ttf);
+    src: url(./common/fonts/Asap-Regular.ttf);
 }
 
 @font-face {
     font-family: semibold;
-    src: url(./common/fonts/Raleway-SemiBold.ttf);
+    src: url(./common/fonts/Asap-SemiBold.ttf);
 }
 
 @font-face {
     font-family: bold;
-    src: url(./common/fonts/Raleway-Bold.ttf);
+    src: url(./common/fonts/Asap-Bold.ttf);
 }
