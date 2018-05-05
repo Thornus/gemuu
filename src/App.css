@@ -1,24 +1,24 @@
+@import "./common/styles/*";
+@import "./pods/*/style";
+
+$main-color: #32343a;
+
 .App {
-  text-align: center;
-
-  &-header {
-    background-color: #222;
-    height: 150px;
-    padding: 20px;
-    color: white;
-  }
-
-  &-logo {
-    animation: App-logo-spin infinite 20s linear;
-    height: 80px;
-  }
-
-  &-intro {
-    font-size: 16px;
-  }
+	height: 100vh;
+	text-align: center;
+	background-color: $main-color;
+	font-family: regular;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+input, textarea {
+	font-family: regular;
+	border: none;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }
