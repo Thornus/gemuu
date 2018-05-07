@@ -13,7 +13,10 @@ class Input extends Component {
 					value={this.props.value}
 					required={this.props.required}
 					pattern={this.props.pattern}
-					title={this.props.title}/>
+					title={this.props.title}
+					onChange={this.props.onChangeValue}
+					onFocus={this.props.onFocus}
+					className={this.props.className}/>
 			</div>
 		);
 	}

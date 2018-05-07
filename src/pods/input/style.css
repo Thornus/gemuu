@@ -18,6 +18,16 @@ $input-placeholder-color: #b4b4b4;
 		&::placeholder {
 			color: $input-placeholder-color;
 		}
+
+		&.shake {
+			animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+			transform: translate3d(0, 0, 0);
+		}
+
+		&.red-outline {
+			border: 1px solid red;
+			border-radius: 5px;
+		}
 	}
 
 	input[type="submit"] {
