@@ -60,8 +60,8 @@ class Login extends Component {
 
 		//const message = this.props.message ? this.props.message : null;
 		return (
-			<div className='login-page'>
-				<form className='login-form' onSubmit={this.handleSubmit}>
+			<div className='login page form-container'>
+				<form className='login-form form-block' onSubmit={this.handleSubmit}>
 					<Input placeholder='Username' type='text' name='username'
 						value={this.state.username} onChangeValue={this.handleChange} onFocus={this.handleFocus}
 						className={this.state.wrongDataClass}/>
@@ -71,8 +71,6 @@ class Login extends Component {
 					<Input type='submit' value='Login'/>
 					<Link to='/register'><Input type='submit' value='Register'/></Link>
 				</form>
-				{/* <button onClick={this.goToRegister.bind(this)}>Don't have an account?</button> */}
-				{/* <div className='message'>{message}</div> */}
 			</div>
 		);
 	}
