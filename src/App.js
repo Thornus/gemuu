@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Login from './pods/login/login';
-import Register from './pods/register/register';
+import Login from './components/login/login';
+import Register from './components/register/register';
 import './App.css';
 
 class App extends Component {
