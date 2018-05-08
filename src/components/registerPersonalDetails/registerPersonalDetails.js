@@ -14,7 +14,24 @@ class RegisterPersonalDetails extends Component {
 			email: '',
 			password: '',
 			phone: '',
+			wrongDataClass: ''
 		};
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleFocus = this.handleFocus.bind(this);
+	}
+
+	handleChange(e) {
+		const newState = {...this.state};
+		newState[e.target.name] = e.target.value;
+
+		this.setState(newState);
+	}
+
+	handleFocus() {
+		if(this.state.wrongDataClass) {
+			this.setState({...this.state, wrongDataClass: ''});
+		}
 	}
 
 	render() {
@@ -39,7 +56,7 @@ class RegisterPersonalDetails extends Component {
 					value={this.state.phone} onChangeValue={this.handleChange} onFocus={this.handleFocus}
 					className={this.state.wrongDataClass}/>
 
-				<Link to='/register/interests'><Input type='submit' value='Next'/></Link>
+				<Link to='/register/interests' onClick={() => this.props.saveData(this.state)}><Input type='submit' value='Next'/></Link>
 			</div>
 		);
 	}
