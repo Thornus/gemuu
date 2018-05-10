@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, {Component} from 'react';
+import { Prompt } from 'react-router';
 import { Route } from 'react-router-dom';
 import PropsRoute from '../propsRoute/propsRoute';
 import RegisterPersonalDetails from '../registerPersonalDetails/registerPersonalDetails';
@@ -15,10 +16,15 @@ class Register extends Component {
 		this.state = {};
 
 		this.saveData = this.saveData.bind(this);
+		this.couldLoseData = this.couldLoseData.bind(this);
 	}
 
 	saveData(data) {
 		this.setState({...this.state, ...data});
+	}
+
+	couldLoseData(location) {
+		return Object.getOwnPropertyNames(this.state).length > 0 && !location.pathname.includes('register')
 	}
 
 	render() {
@@ -31,6 +37,7 @@ class Register extends Component {
 					<PropsRoute path={`${this.props.match.path}/influencers`} component={RegisterInfluencers} saveData={this.saveData}/>
 					<PropsRoute path={`${this.props.match.path}/privacy`} component={RegisterPrivacy} saveData={this.saveData}/>
 				</form>
+				<Prompt message={location => this.couldLoseData(location) ? "Are you sure you want to leave?" : true}/>
 			</div>
 		);
 	}
