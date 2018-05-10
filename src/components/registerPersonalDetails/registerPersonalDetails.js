@@ -36,27 +36,34 @@ class RegisterPersonalDetails extends Component {
 
 	render() {
 		return (
-			<div className='personal-details inner-block'>
-				<Input placeholder='Username' type='text' name='username'
-					value={this.state.username} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-					className={this.state.wrongDataClass}/>
-				<Input placeholder='First name' type='text' name='firstName'
-					value={this.state.firstName} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-					className={this.state.wrongDataClass}/>
-				<Input placeholder='Last name' type='text' name='lastName'
-					value={this.state.lastName} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-					className={this.state.wrongDataClass}/>
-				<Input placeholder='E-mail' type='text' name='email'
-					value={this.state.email} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-					className={this.state.wrongDataClass}/>
-				<Input placeholder='Password' type='password' name='password'
-					value={this.state.password} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-					className={this.state.wrongDataClass}/>
-				<Input placeholder='Phone (optional)' type='text' name='phone'
-					value={this.state.phone} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-					className={this.state.wrongDataClass}/>
+			<div className='personal-details-container w100'>
 
-				<Link to='/register/interests' onClick={() => this.props.saveData(this.state)}><Input type='submit' value='Next'/></Link>
+				<div className='personal-details-form inner-block'>
+					<Input placeholder='Username' type='text' name='username'
+						value={this.state.username} onChangeValue={this.handleChange} onFocus={this.handleFocus}
+						className={this.state.wrongDataClass}/>
+					<Input placeholder='First name' type='text' name='firstName'
+						value={this.state.firstName} onChangeValue={this.handleChange} onFocus={this.handleFocus}
+						className={this.state.wrongDataClass}/>
+					<Input placeholder='Last name' type='text' name='lastName'
+						value={this.state.lastName} onChangeValue={this.handleChange} onFocus={this.handleFocus}
+						className={this.state.wrongDataClass}/>
+					<Input placeholder='E-mail' type='text' name='email'
+						value={this.state.email} onChangeValue={this.handleChange} onFocus={this.handleFocus}
+						className={this.state.wrongDataClass}/>
+					<Input placeholder='Password' type='password' name='password'
+						value={this.state.password} onChangeValue={this.handleChange} onFocus={this.handleFocus}
+						className={this.state.wrongDataClass}/>
+					<Input placeholder='Phone (optional)' type='text' name='phone'
+						value={this.state.phone} onChangeValue={this.handleChange} onFocus={this.handleFocus}
+						className={this.state.wrongDataClass}/>
+
+					<Link to='/register/interests' onClick={() => this.props.saveData(this.state)}><Input type='submit' value='Next'/></Link>
+				</div>
+				<div className='personal-details-errors inner-block'>
+					
+				</div>
+
 			</div>
 		);
 	}

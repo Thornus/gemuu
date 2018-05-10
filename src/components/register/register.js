@@ -29,7 +29,7 @@ class Register extends Component {
 
 	render() {
 		return (
-			<div className='register page center-flex w100'>
+			<div className='register page center-flex flex-column w100'>
 				<form className='register-form center-flex w100'>
 					<PropsRoute exact path={this.props.match.path} component={RegisterPersonalDetails} saveData={this.saveData}/>
 					<PropsRoute path={`${this.props.match.path}/personal`} component={RegisterPersonalDetails} saveData={this.saveData}/>

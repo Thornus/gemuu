@@ -1,8 +1,15 @@
 @import "./common/styles/*";
 @import "./components/*/*";
 
-.App {
-	height: 100vh;
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
 	text-align: center;
 	background-color: $jet-black;
 	font-family: regular, Arial, Verdana;
@@ -13,10 +20,6 @@ input, textarea {
 	border: none;
 }
 
-html {
-  box-sizing: border-box;
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
+.App {
+	height: 100vh;
 }

@@ -9,7 +9,7 @@ import './App.css';
 class App extends Component {
 	render() {
 		return (
-			<div className="App center-flex">
+			<div className="App center-flex flex-column">
 				<Logo/>
 				<Switch>
 					<Route exact path='/' component={Login}/>

@@ -1,0 +1,10 @@
+.personal-details-container {
+	.personal-details-form, .personal-details-errors {
+		display: inline-block;
+	}
+
+	.personal-details-errors {
+		position: absolute;
+		margin-left: 12px;
+	}
+}
