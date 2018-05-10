@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import SearchBar from '../searchBar/searchBar';
 
 class RegisterInterests extends Component {
 
@@ -11,7 +12,8 @@ class RegisterInterests extends Component {
 
 	render() {
 		return (
-			<div className='register-page'>
+			<div className='interests center-flex w100'>
+				<SearchBar/>
 			</div>
 		);
 	}
