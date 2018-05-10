@@ -60,8 +60,8 @@ class Login extends Component {
 
 		//const message = this.props.message ? this.props.message : null;
 		return (
-			<div className='login page form-container'>
-				<form className='login-form form-block' onSubmit={this.handleSubmit}>
+			<div className='login page center-flex'>
+				<form className='login-form inner-block' onSubmit={this.handleSubmit}>
 					<Input placeholder='Username' type='text' name='username'
 						value={this.state.username} onChangeValue={this.handleChange} onFocus={this.handleFocus}
 						className={this.state.wrongDataClass}/>

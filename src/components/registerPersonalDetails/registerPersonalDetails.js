@@ -36,7 +36,7 @@ class RegisterPersonalDetails extends Component {
 
 	render() {
 		return (
-			<div className='personal-details form-block'>
+			<div className='personal-details inner-block'>
 				<Input placeholder='Username' type='text' name='username'
 					value={this.state.username} onChangeValue={this.handleChange} onFocus={this.handleFocus}
 					className={this.state.wrongDataClass}/>

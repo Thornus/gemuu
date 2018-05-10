@@ -24,7 +24,7 @@ class Register extends Component {
 	render() {
 		return (
 			<div className='register page'>
-				<form className='register-form form-container'>
+				<form className='register-form center-flex'>
 					<PropsRoute exact path={this.props.match.path} component={RegisterPersonalDetails} saveData={this.saveData}/>
 					<PropsRoute path={`${this.props.match.path}/personal`} component={RegisterPersonalDetails} />
 					<PropsRoute path={`${this.props.match.path}/interests`} component={RegisterInterests} />

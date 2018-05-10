@@ -1,0 +1,9 @@
+.not-found {
+	flex-direction: column;
+
+	.not-found-text {
+		display: block;
+		font-size: 220px;
+		color: $gray-blue;
+	}
+}
