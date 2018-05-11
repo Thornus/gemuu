@@ -27,6 +27,7 @@ class RegisterPersonalDetails extends Component {
 				password: 'required',
 				passwordConfirm: 'required'
 			},
+			isDirty: false,
 			wrongDataClass: ''
 		};
 
@@ -70,6 +71,8 @@ class RegisterPersonalDetails extends Component {
 	}
 
 	goToNextPage() {
+		this.setState({isDirty: true});
+
 		const passwordsDontMatch = passwordMatch(this.state.password, this.state.passwordConfirm);
 
 		if(passwordsDontMatch) {
@@ -83,7 +86,6 @@ class RegisterPersonalDetails extends Component {
 			}
 
 			this.setState({wrongDataClass: 'shake red-outline'}, callback);
-			console.log('wing');
 			return;
 		}
 
@@ -109,7 +111,7 @@ class RegisterPersonalDetails extends Component {
 				<div className='personal-details-form inner-block'>
 					<Input placeholder='Username' type='text' name='username'
 						value={this.state.username} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-						validations={[required, noSpecialChars]}
+						validations={[noSpecialChars, required]}
 						className={this.state.wrongDataClass} />
 					<Input placeholder='First name' type='text' name='firstName'
 						value={this.state.firstName} onChangeValue={this.handleChange} onFocus={this.handleFocus}
@@ -141,13 +143,13 @@ class RegisterPersonalDetails extends Component {
 					</Link>
 				</div>
 				<div className='personal-details-errors inner-block'>
-					<FieldError message={errorMessages[this.state.formErrors.username]}/>
-					<FieldError message={errorMessages[this.state.formErrors.firstName]}/>
-					<FieldError message={errorMessages[this.state.formErrors.lastName]}/>
-					<FieldError message={errorMessages[this.state.formErrors.email]}/>
-					<FieldError message={errorMessages[this.state.formErrors.password]}/>
+					<FieldError message={errorMessages[this.state.formErrors.username]} isDirty={this.state.isDirty}/>
+					<FieldError message={errorMessages[this.state.formErrors.firstName]} isDirty={this.state.isDirty}/>
+					<FieldError message={errorMessages[this.state.formErrors.lastName]} isDirty={this.state.isDirty}/>
+					<FieldError message={errorMessages[this.state.formErrors.email]} isDirty={this.state.isDirty}/>
+					<FieldError message={errorMessages[this.state.formErrors.password]} isDirty={this.state.isDirty}/>
 					<FieldError/>
-					<FieldError message={errorMessages[this.state.formErrors.phone]}/>
+					<FieldError message={errorMessages[this.state.formErrors.phone]} isDirty={this.state.isDirty}/>
 				</div>
 
 			</div>
