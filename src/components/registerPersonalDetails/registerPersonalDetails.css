@@ -4,6 +4,7 @@
 	}
 
 	.personal-details-errors {
+		text-align: left;
 		position: absolute;
 		margin-left: 12px;
 	}

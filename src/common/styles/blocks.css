@@ -20,3 +20,16 @@
 .w100 {
 	width: 100%;
 }
+
+.button {
+	width: 100%;
+	height: 65px;
+	line-height: 65px;
+	background-color: #c4332d;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .25), 0 0 0 1px rgba(0, 0, 0, .15);
+	color: #fff;
+	padding: 0 10px;
+	border-radius: 5px;
+	font-size: 20px;
+	margin-bottom: 20px;
+}

@@ -14,7 +14,7 @@ class Input extends Component {
 					required={this.props.required}
 					pattern={this.props.pattern}
 					title={this.props.title}
-					onChange={this.props.onChangeValue}
+					onChange={(e) => this.props.onChangeValue(this.props.validations, e)}
 					onFocus={this.props.onFocus}
 					className={this.props.className}/>
 			</div>
