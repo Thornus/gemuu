@@ -1,0 +1,4 @@
+.interest-cards-container {
+	flex-wrap: wrap;
+    align-content: flex-start;
+}
