@@ -1,11 +1,6 @@
 .personal-details-container {
-	.personal-details-form, .personal-details-errors {
+	.personal-details-form {
 		display: inline-block;
-	}
-
-	.personal-details-errors {
-		text-align: left;
-		position: absolute;
-		margin-left: 12px;
+		margin-left: 25%;
 	}
 }

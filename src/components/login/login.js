@@ -21,7 +21,7 @@ class Login extends Component {
 	}
 
 	handleChange(e) {
-		const newState = {...this.state};
+		const newState = {};
 		newState[e.target.name] = e.target.value;
 
 		this.setState(newState);
@@ -29,7 +29,7 @@ class Login extends Component {
 
 	handleFocus() {
 		if(this.state.wrongDataClass) {
-			this.setState({...this.state, wrongDataClass: ''});
+			this.setState({wrongDataClass: ''});
 		}
 	}
 
@@ -46,10 +46,10 @@ class Login extends Component {
 		} catch(err) {
 			const callback = () => {
 				const self = this;
-                setTimeout(() => self.setState({...this.state, wrongDataClass: 'red-outline'}), 840);
+                setTimeout(() => self.setState({wrongDataClass: 'red-outline'}), 840);
 			}
 
-			this.setState({...this.state, wrongDataClass: 'shake red-outline'}, callback);
+			this.setState({wrongDataClass: 'shake red-outline'}, callback);
 		}
 	}
 
@@ -60,16 +60,18 @@ class Login extends Component {
 
 		//const message = this.props.message ? this.props.message : null;
 		return (
-			<div className='login page center-flex flex-column inner-block'>
-				<form className='login-form w100' onSubmit={this.handleSubmit}>
+			<div className='login page center-flex flex-column w25'>
+				<form className='login-form w100'>
 					<Input placeholder='Username' type='text' name='username'
 						value={this.state.username} onChangeValue={this.handleChange} onFocus={this.handleFocus}
 						className={this.state.wrongDataClass}/>
 					<Input placeholder='Password' type='password' name='password'
 						value={this.state.password} onChangeValue={this.handleChange} onFocus={this.handleFocus}
 						className={this.state.wrongDataClass}/>
-					<Input type='submit' value='Login'/>
-					<Link to='/register/personal'><Input type='submit' value='Register'/></Link>
+					<div className='button' onClick={this.handleSubmit}>Login</div>
+					<Link to='/register/personal'>
+						<div className='button'>Register</div>
+					</Link>
 				</form>
 			</div>
 		);

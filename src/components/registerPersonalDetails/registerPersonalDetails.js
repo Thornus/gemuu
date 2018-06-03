@@ -2,7 +2,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import { required, email, noSpecialChars, password, passwordMatch, phone } from '../../validations/validations';
-import errorMessages from '../../validations/errorMessages';
 import _ from 'lodash';
 import Input from '../input/input';
 import FieldError from '../fieldError/fieldError';
@@ -11,6 +10,7 @@ class RegisterPersonalDetails extends Component {
 
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			username: '',
 			firstName: '',
@@ -19,76 +19,53 @@ class RegisterPersonalDetails extends Component {
 			password: '',
 			passwordConfirm: '',
 			phone: '',
-			formErrors: {
-				username: 'required',
-				firstName: 'required',
-				lastName: 'required',
-				email: 'required',
-				password: 'required',
-				passwordConfirm: 'required'
-			},
-			isDirty: false,
-			wrongDataClass: ''
+			isFormValid: false
 		};
 
-		this.handleChange = this.handleChange.bind(this);
-		this.handleFocus = this.handleFocus.bind(this);
-		this.validateField = this.validateField.bind(this);
-	}
+		this.handleBlur = this.handleBlur.bind(this);
+		this.goToNextPage = this.goToNextPage.bind(this);
+		this.validateForm = this.validateForm.bind(this);
 
-	handleChange(validations, e) {
-		const newState = {...this.state};
-		newState[e.target.name] = e.target.value;
-
-		if(validations) {
-			_.assign(newState.formErrors, this.validateField(e.target.name, e.target.value, validations));
-		}
-
-		this.setState(newState);
-	}
-
-	handleFocus() {
-		if(this.state.wrongDataClass) {
-			this.setState({...this.state, wrongDataClass: ''});
-		}
-	}
-
-	validateField(fieldName, value, validations) {
-		let formErrors = this.state.formErrors;
-
-		for(let validate of validations) {
-			let	result = validate(value);
-
-			if(result) {
-				formErrors[fieldName] = result;
-				break;
-			} else {
-				delete formErrors[fieldName];
+		this.inputs = {
+			username: {
+				name: 'username',
+				validations: [noSpecialChars, required],
+				error: ''
+			},
+			firstName: {
+				name: 'firstName',
+				validations: [required, noSpecialChars],
+				error: ''
+			},
+			lastName: {
+				name: 'lastName',
+				validations: [required, noSpecialChars],
+				error: ''
+			},
+			email: {
+				name: 'email',
+				validations: [required, email],
+				error: ''
+			},
+			password: {
+				name: 'password',
+				validations: [required, password],
+				error: ''
+			},
+			passwordConfirm: {
+				name: 'password',
+				validations: [required],
+				error: ''
+			},
+			phone: {
+				name: 'phone',
+				validations: [required, phone],
+				error: ''
 			}
-		}
-
-		return formErrors;
+		};
 	}
 
 	goToNextPage() {
-		this.setState({isDirty: true});
-
-		const passwordsDontMatch = passwordMatch(this.state.password, this.state.passwordConfirm);
-
-		if(passwordsDontMatch) {
-			this.state.formErrors['password'] = passwordsDontMatch;
-		}
-
-		if(!_.isEmpty(this.state.formErrors) || passwordsDontMatch) {
-			const callback = () => {
-				const self = this;
-				setTimeout(() => self.setState({wrongDataClass: 'red-outline'}), 840);
-			}
-
-			this.setState({wrongDataClass: 'shake red-outline'}, callback);
-			return;
-		}
-
 		const data = {
 			username: this.state.username,
 			firstName: this.state.firstName,
@@ -99,57 +76,116 @@ class RegisterPersonalDetails extends Component {
 		};
 
 		this.props.saveData(data);
+		this.validateForm();
+	}
+
+	validateForm() {
+		let isFormValid = true;
+
+		_.each(this.inputs, (inputObject) => {
+			let error = '';
+
+			for(let validate of inputObject.validations) {
+				let	result = validate(this.state[inputObject.name]);
+
+				if(result) {
+					inputObject.error = result;
+					isFormValid = false;
+					break;
+				}
+			}
+		});
+
+		if(!this.inputs['password'].error) {
+			this.inputs['password'].error = passwordMatch(this.state.password, this.state.passwordConfirm);
+			if(this.inputs['password'].error) {
+				isFormValid = false;
+			}
+		}
+
+		this.setState({isFormValid});
+    }
+
+	handleBlur(e) {
+		let newState = {};
+
+		newState[e.target.name] = e.target.value;
+
+		this.setState(newState);
+	}
+
+	componentDidUpdate() {
+		this.inputs = {
+			username: {
+				name: 'username',
+				validations: [noSpecialChars, required],
+				error: ''
+			},
+			firstName: {
+				name: 'firstName',
+				validations: [required, noSpecialChars],
+				error: ''
+			},
+			lastName: {
+				name: 'lastName',
+				validations: [required, noSpecialChars],
+				error: ''
+			},
+			email: {
+				name: 'email',
+				validations: [required, email],
+				error: ''
+			},
+			password: {
+				name: 'password',
+				validations: [required, password],
+				error: ''
+			},
+			passwordConfirm: {
+				name: 'password',
+				validations: [required],
+				error: ''
+			},
+			phone: {
+				name: 'phone',
+				validations: [required, phone],
+				error: ''
+			}
+		};
 	}
 
 	render() {
-		const nextPage = _.isEmpty(this.state.formErrors) && !passwordMatch(this.state.password, this.state.passwordConfirm)
-						? '/register/interests' : this.props.match.path;
+		const nextPage = this.state.isFormValid ? '/register/interests' : this.props.match.path;
 
 		return (
 			<div className='personal-details-container w100'>
 
-				<div className='personal-details-form inner-block'>
+				<div className='personal-details-form w50'>
 					<Input placeholder='Username' type='text' name='username'
-						value={this.state.username} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-						validations={[noSpecialChars, required]}
-						className={this.state.wrongDataClass} />
+						onBlur={this.handleBlur} onFocus={this.handleFocus}
+						validations={this.inputs['username'].validations} error={this.inputs['username'].error}/>
 					<Input placeholder='First name' type='text' name='firstName'
-						value={this.state.firstName} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-						validations={[required, noSpecialChars]}
-						className={this.state.wrongDataClass}/>
+						onBlur={this.handleBlur} onFocus={this.handleFocus}
+						validations={this.inputs['firstName'].validations} error={this.inputs['firstName'].error}/>
 					<Input placeholder='Last name' type='text' name='lastName'
-						value={this.state.lastName} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-						validations={[required, noSpecialChars]}
-						className={this.state.wrongDataClass}/>
+						onBlur={this.handleBlur} onFocus={this.handleFocus}
+						validations={this.inputs['lastName'].validations} error={this.inputs['lastName'].error}/>
 					<Input placeholder='E-mail' type='text' name='email'
-						value={this.state.email} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-						validations={[required, email]}
-						className={this.state.wrongDataClass}/>
+						onBlur={this.handleBlur} onFocus={this.handleFocus}
+						validations={this.inputs['email'].validations} error={this.inputs['email'].error}/>
 					<Input placeholder='Password' type='password' name='password'
-						value={this.state.password} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-						validations={[required, password]}
-						className={this.state.wrongDataClass}/>
+						onBlur={this.handleBlur} onFocus={this.handleFocus}
+						validations={this.inputs['password'].validations} error={this.inputs['password'].error}/>
 					<Input placeholder='Confirm password' type='password' name='passwordConfirm'
-						value={this.state.passwordConfirm} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-						validations={[required]}
-						className={this.state.wrongDataClass}/>
+						onBlur={this.handleBlur} onFocus={this.handleFocus}
+						validations={this.inputs['passwordConfirm'].validations} error={this.inputs['passwordConfirm'].error}/>
 					<Input placeholder='Phone (optional)' type='text' name='phone'
-						value={this.state.phone} onChangeValue={this.handleChange} onFocus={this.handleFocus}
-						validations={[required, phone]}
-						className={this.state.wrongDataClass}/>
+						onBlur={this.handleBlur} onFocus={this.handleFocus}
+						validations={this.inputs['phone'].validations} error={this.inputs['phone'].error}/>
 
-					<Link to={nextPage} onClick={() => this.goToNextPage()}>
-						<div className='button'>Next</div>
+					<Link to={nextPage} onClick={this.goToNextPage}>
+						<div className='button w50'>Next</div>
 					</Link>
-				</div>
-				<div className='personal-details-errors inner-block'>
-					<FieldError message={errorMessages[this.state.formErrors.username]} isDirty={this.state.isDirty}/>
-					<FieldError message={errorMessages[this.state.formErrors.firstName]} isDirty={this.state.isDirty}/>
-					<FieldError message={errorMessages[this.state.formErrors.lastName]} isDirty={this.state.isDirty}/>
-					<FieldError message={errorMessages[this.state.formErrors.email]} isDirty={this.state.isDirty}/>
-					<FieldError message={errorMessages[this.state.formErrors.password]} isDirty={this.state.isDirty}/>
-					<FieldError/>
-					<FieldError message={errorMessages[this.state.formErrors.phone]} isDirty={this.state.isDirty}/>
 				</div>
 
 			</div>
