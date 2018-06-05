@@ -1,0 +1,57 @@
+.card-label {
+	height: 20%;
+	margin: 14px;
+	flex-basis: 30%;
+	cursor: pointer;
+
+	transition: all .2s ease-out;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	&:hover {
+		transform: translateY(-10%);
+	}
+
+	input:checked ~ .card .bg-img {
+		filter: hue-rotate(90deg);
+		transition: all 0.5s ease-in;
+	}
+
+	input {
+		display: none;
+	}
+
+	.card {
+		height: 100%;
+		position: relative;
+		text-align: left;
+	    color: $white;
+		padding-left: 10px;
+
+	    border-radius: 5px;
+	    border: 5px solid #ffffff00;
+	    border-bottom-color: rgba(0, 0, 0, 0.14);
+
+	    font-family: 'regular';
+
+		opacity: 0;
+		animation-duration: 0.7s;
+		animation-fill-mode: forwards;
+
+		.bg-img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			height: 100%;
+			width: 100%;
+			background: $theme-gray url("/images/interests/dota2-interest-bg.jpg") no-repeat center;
+			background-size: cover;
+			opacity: 0.7;
+		}
+	}
+
+}
