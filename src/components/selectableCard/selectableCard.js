@@ -17,6 +17,7 @@ class SelectableCard extends Component {
 				<div className='card fadeInDown' style={{animationDelay: `${this.props.animDelay}s`}}>
 					<h1>{this.props.name}</h1>
 					<h2>{this.props.followers}</h2>
+					<div className='checkbox-square'></div>
 					<div className='bg-img'></div>
 				</div>
 			</label>

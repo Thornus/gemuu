@@ -35,3 +35,17 @@
 .fadeInDown {
   animation-name: fadeInDown;
 }
+
+@keyframes zoomIn {
+  from {
+    transform: scale3d(0, 0, 0);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.zoomIn {
+	animation-name: zoomIn;
+}
