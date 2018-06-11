@@ -15,7 +15,8 @@ class RegisterInterests extends Component {
 
 	async componentDidMount() {
 		try {
-			let interests = await axios.get(`${config.development.backendUrl}/interests`);
+			let res = await axios.get(`${config.development.backendUrl}/interests`);
+			let interests = res.data.interests;
 			this.setState({interests});
 		} catch(err) {
 			// 'delete line';
@@ -23,8 +24,7 @@ class RegisterInterests extends Component {
 	}
 
 	render() {
-		const minghuoCard = { name: 'Dota2', imgPath: '/images/interests/dota2-interest-bg.jpg', followers: '1.54 million followers' };
-		let interests = [minghuoCard, minghuoCard, minghuoCard, minghuoCard, minghuoCard, minghuoCard];
+		let interests = this.state.interests;
 		let cards = [];
 		let animDelay = 0.1;
 
