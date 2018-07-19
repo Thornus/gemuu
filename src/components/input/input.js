@@ -9,8 +9,9 @@ class Input extends Component {
 		super(props);
 
 		let error = this.props.error;
+		const shouldShowRequired = this.props.validations && this.props.validations.indexOf('required') > -1 && this.props.type !== 'checkbox';
 
-		if(this.props.validations && this.props.validations.indexOf('required') > -1) {
+		if(shouldShowRequired) {
 			 error = 'required';
 		}
 
@@ -54,7 +55,7 @@ class Input extends Component {
 		if(nextProps.error) {
 			return {error: nextProps.error};
 		} else {
-			return null;
+			return {error: ''};
 		}
 	}
 
@@ -63,20 +64,36 @@ class Input extends Component {
 		const fieldError = this.props.validations ?
 							<FieldError message={errorMessages[this.state.error]}/> : '';
 
+		let input;
+
+		if (this.props.type === 'checkbox') {
+			input = <label className="checkbox-label center-flex">
+						<input type="checkbox" name={this.props.name} onChange={this.props.onCheck}/>
+						<div className="checkbox-square-container">
+							{this.props.text}
+							<div className='checkbox-square'></div>
+						</div>
+						{fieldError}
+					</label>
+		} else {
+			input = <div className='input-field center-flex'>
+						<span>{this.props.text}</span>
+						<input type={this.props.type}
+							name={this.props.name}
+							placeholder={this.props.placeholder}
+							value={this.state.value}
+							required={this.props.required}
+							pattern={this.props.pattern}
+							onChange={this.handleChange}
+							onBlur={this.props.onBlur}
+							onFocus={this.props.onFocus ? this.props.onFocus : null}
+							className={`${this.props.className} ${wrongDataClass}`}/>
+							{fieldError}
+					</div>;
+		}
+
 		return (
-			<div className='input-field center-flex'>
-				<span>{this.props.text}</span>
-				<input type={this.props.type}
-					name={this.props.name}
-					placeholder={this.props.placeholder}
-					value={this.state.value}
-					required={this.props.required}
-					pattern={this.props.pattern}
-					onChange={this.handleChange}
-					onBlur={this.props.onBlur}
-					className={`${this.props.className} ${wrongDataClass}`}/>
-					{fieldError}
-			</div>
+			input
 		);
 	}
 

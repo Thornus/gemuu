@@ -2,5 +2,9 @@
 	.personal-details-form {
 		display: inline-block;
 		margin-left: 25%;
+
+		.field-error {
+			margin-bottom: 20px;
+		}
 	}
 }

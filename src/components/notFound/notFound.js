@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import Input from '../input/input';
 
 class NotFound extends Component {
 
@@ -8,7 +7,9 @@ class NotFound extends Component {
 		return (
 			<div className='not-found page center-flex flex-column'>
 				<div className='not-found-text'>404</div>
-				<Link to='/'><Input type='submit' value="Go home, you're drunk"/></Link>
+				<Link to='/'>
+					<div className='button'>Go home, you&#39;re drunk</div>
+				</Link>
 			</div>
 		);
 	}

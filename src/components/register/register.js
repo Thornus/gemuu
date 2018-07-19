@@ -20,7 +20,11 @@ class Register extends Component {
 	}
 
 	saveData(data) {
-		this.setState({...this.state, ...data});
+		this.setState({...data});
+	}
+
+	submit() {
+		console.log('fake submit!');
 	}
 
 	couldLoseData(location) {
@@ -35,7 +39,7 @@ class Register extends Component {
 					<PropsRoute path={`${this.props.match.path}/personal`} component={RegisterPersonalDetails} saveData={this.saveData}/>
 					<PropsRoute path={`${this.props.match.path}/interests`} component={RegisterInterests} saveData={this.saveData}/>
 					<PropsRoute path={`${this.props.match.path}/influencers`} component={RegisterInfluencers} saveData={this.saveData}/>
-					<PropsRoute path={`${this.props.match.path}/privacy`} component={RegisterPrivacy} saveData={this.saveData}/>
+					<PropsRoute path={`${this.props.match.path}/privacy`} component={RegisterPrivacy} saveData={this.saveData} submit={this.submit}/>
 				</form>
 				<Prompt message={location => this.couldLoseData(location) ? "Are you sure you want to leave?" : true}/>
 			</div>

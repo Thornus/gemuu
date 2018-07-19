@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { required, email, noSpecialChars, password, passwordMatch, phone } from '../../validations/validations';
 import _ from 'lodash';
 import Input from '../input/input';
-import FieldError from '../fieldError/fieldError';
 
 class RegisterPersonalDetails extends Component {
 
@@ -22,10 +21,6 @@ class RegisterPersonalDetails extends Component {
 			isFormValid: false
 		};
 
-		this.handleBlur = this.handleBlur.bind(this);
-		this.goToNextPage = this.goToNextPage.bind(this);
-		this.validateForm = this.validateForm.bind(this);
-
 		this.inputs = {
 			username: {
 				name: 'username',
@@ -59,10 +54,15 @@ class RegisterPersonalDetails extends Component {
 			},
 			phone: {
 				name: 'phone',
-				validations: [required, phone],
+				validations: [phone],
 				error: ''
 			}
 		};
+
+		this.handleBlur = this.handleBlur.bind(this);
+		this.handleFocus = this.handleFocus.bind(this);
+		this.goToNextPage = this.goToNextPage.bind(this);
+		this.validateForm = this.validateForm.bind(this);
 	}
 
 	goToNextPage() {
@@ -76,15 +76,15 @@ class RegisterPersonalDetails extends Component {
 		};
 
 		this.props.saveData(data);
-		this.validateForm();
+
+		const isFormValid = this.validateForm();
+		this.setState({isFormValid});
 	}
 
 	validateForm() {
 		let isFormValid = true;
 
 		_.each(this.inputs, (inputObject) => {
-			let error = '';
-
 			for(let validate of inputObject.validations) {
 				let	result = validate(this.state[inputObject.name]);
 
@@ -96,14 +96,14 @@ class RegisterPersonalDetails extends Component {
 			}
 		});
 
-		if(!this.inputs['password'].error) {
+		if (!this.inputs['password'].error) {
 			this.inputs['password'].error = passwordMatch(this.state.password, this.state.passwordConfirm);
-			if(this.inputs['password'].error) {
+			if (this.inputs['password'].error) {
 				isFormValid = false;
 			}
 		}
 
-		this.setState({isFormValid});
+		return isFormValid;
     }
 
 	handleBlur(e) {
@@ -114,44 +114,8 @@ class RegisterPersonalDetails extends Component {
 		this.setState(newState);
 	}
 
-	componentDidUpdate() {
-		this.inputs = {
-			username: {
-				name: 'username',
-				validations: [noSpecialChars, required],
-				error: ''
-			},
-			firstName: {
-				name: 'firstName',
-				validations: [required, noSpecialChars],
-				error: ''
-			},
-			lastName: {
-				name: 'lastName',
-				validations: [required, noSpecialChars],
-				error: ''
-			},
-			email: {
-				name: 'email',
-				validations: [required, email],
-				error: ''
-			},
-			password: {
-				name: 'password',
-				validations: [required, password],
-				error: ''
-			},
-			passwordConfirm: {
-				name: 'password',
-				validations: [required],
-				error: ''
-			},
-			phone: {
-				name: 'phone',
-				validations: [required, phone],
-				error: ''
-			}
-		};
+	handleFocus(e) {
+		this.inputs[e.target.name].error = '';
 	}
 
 	render() {
