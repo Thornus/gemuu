@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -18,8 +19,11 @@ class RegisterInterests extends Component {
 			isFormValid: false
 		};
 
+		this.selectedInterests = [];
+
 		this.goToNextPage = this.goToNextPage.bind(this);
 		this.validateForm = this.validateForm.bind(this);
+		this.pushSelectedCard = this.pushSelectedCard.bind(this);
 	}
 
 	async componentDidMount() {
@@ -35,18 +39,13 @@ class RegisterInterests extends Component {
 
 			this.setState({interests});
 		} catch(err) {
-			// 'delete line';
+			// oishii
 		}
 	}
 
 	goToNextPage() {
 		const data = {
-			username: this.state.username,
-			firstName: this.state.firstName,
-			lastName: this.state.lastName,
-			email: this.state.email,
-			password: this.state.password,
-			phone: this.state.phone
+			interests: this.selectedInterests
 		};
 
 		this.props.saveData(data);
@@ -73,6 +72,12 @@ class RegisterInterests extends Component {
 		return isFormValid;
 	}
 
+	pushSelectedCard(interestName) {
+		if(this.selectedInterests.indexOf(interestName) === -1) {
+			this.selectedInterests = this.selectedInterests.concat(interestName);
+		}
+	}
+
 	render() {
 		if (this.state.isFormValid) {
 			return <Redirect to='/register/privacy'/>;
@@ -84,7 +89,9 @@ class RegisterInterests extends Component {
 
 		for (let i = 0; i < interests.length; i++) {
 			cards.push(
-				<SelectableCard name={interests[i].name} followers={interests[i].followers} imgPath={interests[i].imgPath} animDelay={animDelay} key={i}/>
+				<SelectableCard name={interests[i].name} followers={interests[i].followers}
+					imgPath={interests[i].imgPath} animDelay={animDelay} key={i}
+					handleClick={this.pushSelectedCard}/>
 			);
 			animDelay += 0.2;
 		}
@@ -106,6 +113,5 @@ class RegisterInterests extends Component {
 export default RegisterInterests;
 
 RegisterInterests.propTypes = {
-	match: PropTypes.string,
 	saveData: PropTypes.func
 };

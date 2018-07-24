@@ -7,6 +7,8 @@ import RegisterPersonalDetails from '../registerPersonalDetails/registerPersonal
 import RegisterInterests from '../registerInterests/registerInterests';
 import RegisterInfluencers from '../registerInfluencers/registerInfluencers';
 import RegisterPrivacy from '../registerPrivacy/registerPrivacy';
+import axios from 'axios';
+import config from '../../config';
 
 class Register extends Component {
 
@@ -17,14 +19,15 @@ class Register extends Component {
 
 		this.saveData = this.saveData.bind(this);
 		this.couldLoseData = this.couldLoseData.bind(this);
+		this.submit = this.submit.bind(this);
 	}
 
 	saveData(data) {
 		this.setState({...data});
 	}
 
-	submit() {
-		console.log('fake submit!');
+	async submit() {
+		let res = await axios.post(`${config.development.backendUrl}/registration`, this.state);
 	}
 
 	couldLoseData(location) {

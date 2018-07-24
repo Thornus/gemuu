@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
+import { required } from '../../validations/validations';
 import Input from '../input/input';
 import axios from 'axios';
 import config from '../../config';
@@ -11,26 +12,37 @@ class Login extends Component {
 		super(props);
 		this.state = {
 			username: '',
-			password: '',
-			wrongDataClass: ''
+			password: ''
 		};
 
-		this.handleChange = this.handleChange.bind(this);
+		this.inputs = {
+			username: {
+				name: 'username',
+				validations: [required],
+				error: ''
+			},
+			password: {
+				name: 'password',
+				validations: [required],
+				error: ''
+			}
+		};
+
+		this.handleBlur = this.handleBlur.bind(this);
 		this.handleFocus = this.handleFocus.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	handleChange(e) {
-		const newState = {};
+	handleBlur(e) {
+		let newState = {};
+
 		newState[e.target.name] = e.target.value;
 
 		this.setState(newState);
 	}
 
-	handleFocus() {
-		if(this.state.wrongDataClass) {
-			this.setState({wrongDataClass: ''});
-		}
+	handleFocus(e) {
+		this.inputs[e.target.name].error = '';
 	}
 
 	async handleSubmit(e) {
@@ -42,7 +54,11 @@ class Login extends Component {
 		};
 
 		try {
-			await axios.post(`${config.development.backendUrl}/login`, data);
+			const res = await axios.post(`${config.development.backendUrl}/login`, data);
+
+			if(res.data.token) {
+				this.setState({message: 'Logged in! :D'});
+			}
 		} catch(err) {
 			const callback = () => {
 				const self = this;
@@ -58,21 +74,22 @@ class Login extends Component {
 		// 	this.goToUserPage.bind(this)();
 		// }
 
-		//const message = this.props.message ? this.props.message : null;
+		// const message = this.state.message ? this.state.message : null;
 		return (
 			<div className='login page center-flex flex-column w25'>
 				<form className='login-form w100'>
 					<Input placeholder='Username' type='text' name='username'
-						value={this.state.username} onChangeValue={this.handleChange} onFocus={this.handleFocus}
+						value={this.state.username} onBlur={this.handleBlur} onFocus={this.handleFocus}
 						className={this.state.wrongDataClass}/>
 					<Input placeholder='Password' type='password' name='password'
-						value={this.state.password} onChangeValue={this.handleChange} onFocus={this.handleFocus}
+						value={this.state.password} onBlur={this.handleBlur} onFocus={this.handleFocus}
 						className={this.state.wrongDataClass}/>
 					<div className='button' onClick={this.handleSubmit}>Login</div>
 					<Link to='/register/personal'>
 						<div className='button'>Register</div>
 					</Link>
 				</form>
+				<h1>{this.state.message}</h1>
 			</div>
 		);
 	}

@@ -72,6 +72,7 @@ class RegisterPersonalDetails extends Component {
 			lastName: this.state.lastName,
 			email: this.state.email,
 			password: this.state.password,
+			passwordConfirm: this.state.passwordConfirm,
 			phone: this.state.phone
 		};
 
