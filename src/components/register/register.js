@@ -28,6 +28,10 @@ class Register extends Component {
 
 	async submit() {
 		let res = await axios.post(`${config.development.backendUrl}/registration`, this.state);
+
+		if(res.status === 200) {
+			window.location = '/';
+		}
 	}
 
 	couldLoseData(location) {
