@@ -35,7 +35,7 @@ const passwordMatch = (password, passwordConfirm) => {
 };
 
 const phone = (value) => {
-	const isValid = value.match(/^[0-9 +-]+$/);
+	const isValid = value ? value.match(/^[0-9 +-]+$/) : true;
 
 	if(!isValid) {
 		return 'invalidPhone';
