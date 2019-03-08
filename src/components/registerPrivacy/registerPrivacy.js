@@ -73,14 +73,6 @@ class RegisterPrivacy extends Component {
 			}
 		});
 
-		// ******* WARNING: THIS validateForm FUNCTION WOULD BREAK IF THE FOLLOWING BLOCK WERE UNCOMMENTD *******
-		// if (!this.inputs['password'].error) {
-		// 	this.inputs['password'].error = passwordMatch(this.state.password, this.state.passwordConfirm);
-		// 	if (this.inputs['password'].error) {
-		// 		isFormValid = false;
-		// 	}
-		// }
-
 		return isFormValid;
 	}
 

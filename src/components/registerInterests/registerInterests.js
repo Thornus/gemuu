@@ -39,7 +39,7 @@ class RegisterInterests extends Component {
 
 			this.setState({interests});
 		} catch(err) {
-			// oishii
+			
 		}
 	}
 
@@ -83,7 +83,9 @@ class RegisterInterests extends Component {
 			return <Redirect to='/register/privacy'/>;
 		}
 
-		let interests = this.state.interests;
+		const exampleInterest = { name: 'Dota2', imgPath: '/images/interests/dota2-interest-bg.jpg', followers: '1.54 million' };
+		let interests = [exampleInterest, exampleInterest, exampleInterest, exampleInterest, exampleInterest, exampleInterest];
+
 		let cards = [];
 		let animDelay = 0.1;
 
